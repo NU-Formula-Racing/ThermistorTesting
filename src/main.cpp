@@ -8,7 +8,7 @@ VirtualTimerGroup timer_group;
 const uint8_t kNumThermistors{8};
 
 std::array<NXFT15XH103FA2B050ADCThermistor*, kNumThermistors> thermistors;
-std::array<uint8_t, kNumThermistors> thermistor_pins{36, 39, 34, 35, 32, 33, 25, 26};
+std::array<uint8_t, kNumThermistors> thermistor_pins{A0, A3, A6, A7, A4, A5, A18, A19};
 
 void PrintValues()
 {
@@ -25,11 +25,11 @@ void setup()
 {
     for (int i = 0; i < kNumThermistors; i++)
     {
-        thermistors[i] = new NXFT15XH103FA2B050ADCThermistor(thermistor_pins[i], 3.3f / 4095, 3.3f, 10000);
+        thermistors[i] = new NXFT15XH103FA2B050ADCThermistor(thermistor_pins[i], 3.3f / 4095, 0.14, 3.3f, 10000);
     }
-    Serial.begin(9600);
+    Serial.begin(115200);
+    Serial.println("Begin");
     timer_group.AddTimer(100, []() { PrintValues(); });
-    // put your setup code here, to run once:
 }
 
 void loop()
